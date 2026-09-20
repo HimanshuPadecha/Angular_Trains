@@ -12,6 +12,8 @@
       [trains]="filteredTrains()"
       [searchParams]="searchParams"
       class="col-span-12 lg:col-span-9"
+      [filters]="filters()"
+      (filtersChange)="onFilterChange($event)"
     ></app-train-list>
   </main>
 

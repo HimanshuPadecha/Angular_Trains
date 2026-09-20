@@ -19,10 +19,11 @@
       <span class="text-xs uppercase font-bold text-slate-400">Sort by:</span>
       <select
         class="bg-transparent border-none text-sm font-bold focus:ring-0 cursor-pointer text-primary"
+        (change)="onSortingChange($event)"
       >
-        <option>Departure Time</option>
-        <option>Duration</option>
-        <option>Earliest Arrival</option>
+        <option value="DT">Departure Time</option>
+        <option value="D">Duration</option>
+        <option value="EA">Earliest Arrival</option>
       </select>
     </div>
   </div>

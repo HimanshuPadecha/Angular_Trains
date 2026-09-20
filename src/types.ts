@@ -157,11 +157,13 @@ export interface Train {
 export type times = 'MORNING' | 'NOON' | 'EVENING' | 'NIGHT';
 export type classes = 'SL' | '3A' | '2A' | '1A';
 export type TrainTypes = 'RAJDHANI' | 'SHATABDI' | 'DURONTO' | 'EXPRESS' | 'SUPERFAST';
+export type sort = 'DT' | 'D' | 'EA';
 
 export interface Filters {
   time: times | null;
   class: classes[];
   type: TrainTypes | null;
+  sort: sort | null;
 }
 
 export const timeMap: { timezone: times; start: number; end: number }[] = [
@@ -186,3 +188,9 @@ export const timeMap: { timezone: times; start: number; end: number }[] = [
     end: 24,
   },
 ];
+
+
+export type time = {
+  hours : number , 
+  min : number
+}

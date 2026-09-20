@@ -30,7 +30,7 @@ export class SidebarFilters {
   ];
 
   clearAllHandler() {
-    this.filtersChange.emit({ class: [], time: null, type: null });
+    this.filtersChange.emit({ class: [], time: null, type: null, sort: null });
   }
 
   timeHandler(time: times) {

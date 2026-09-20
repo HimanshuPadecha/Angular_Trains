@@ -2,7 +2,7 @@ import { Component, computed, inject, OnInit, PLATFORM_ID, signal } from '@angul
 import { SidebarFilters } from '../sidebar-filters/sidebar-filters';
 import { TrainList } from '../train-list/train-list';
 import { MobileNav } from '../mobile-nav/mobile-nav';
-import { classes, Filters, SearchTrainsParams, timeMap, Train } from '../../types';
+import { classes, Filters, SearchTrainsParams, time, timeMap, Train } from '../../types';
 import { isPlatformBrowser } from '@angular/common';
 
 @Component({
@@ -14,7 +14,7 @@ import { isPlatformBrowser } from '@angular/common';
 export class TrainAvaliability implements OnInit {
   trains = signal<Train[]>([]);
   searchParams: SearchTrainsParams = {
-    source: 'Source ',
+    source: 'Source',
     destination: 'Destination',
   };
 
@@ -22,7 +22,7 @@ export class TrainAvaliability implements OnInit {
     let trains: Train[] = [];
     const filters = this.filters();
 
-    if (!filters.class.length && !filters.time && !filters.type) {
+    if (!filters.class.length && !filters.time && !filters.type && filters.sort === null) {
       return this.trains();
     }
 
@@ -31,7 +31,7 @@ export class TrainAvaliability implements OnInit {
     }
 
     // class filter => filters.class array = train.classes
-    if (filters.class.length) {
+    if (filters.class.length < 0) {
       trains = [
         ...trains,
         ...this.trains().filter((train) => {
@@ -76,10 +76,130 @@ export class TrainAvaliability implements OnInit {
       ];
     }
 
+    // sorting logic
+    if (this.searchParams.source === 'Source') {
+      return trains;
+    }
+
+    if (filters.class.length === 0 && filters.time === null && filters.type === null) {
+      trains = this.trains();
+    }
+
+    if (filters.sort === 'DT' || filters.sort === 'EA') {
+      trains.sort((one, two) => {
+        const firstStation = one.stops.find(
+          (station) => station.stationName === this.searchParams.source,
+        );
+
+        const secondStation = two.stops.find(
+          (station) => station.stationName === this.searchParams.source,
+        );
+
+        console.log(firstStation, secondStation);
+
+        if (
+          !firstStation ||
+          !secondStation ||
+          Number.isNaN(
+            Number.parseInt(
+              filters.sort === 'DT'
+                ? firstStation.departureTime.split(':')[0]
+                : firstStation.arrivalTime.split(':')[0],
+            ) -
+              Number.parseInt(
+                filters.sort === 'DT'
+                  ? secondStation.departureTime.split(':')[0]
+                  : secondStation.arrivalTime.split(':')[0],
+              ),
+          )
+        ) {
+          return 0;
+        }
+
+        return (
+          Number.parseInt(
+            filters.sort === 'DT'
+              ? firstStation.departureTime.split(':')[0]
+              : firstStation.arrivalTime.split(':')[0],
+          ) -
+          Number.parseInt(
+            filters.sort === 'DT'
+              ? secondStation.departureTime.split(':')[0]
+              : secondStation.arrivalTime.split(':')[0],
+          )
+        );
+      });
+    } else if (filters.sort === 'D') {
+      trains.sort((one, two) => {
+        const oneSourceStation = one.stops.find(
+          (station) => station.stationName === this.searchParams.source,
+        );
+        const oneDestinationStation = one.stops.find(
+          (station) => station.stationName === this.searchParams.destination,
+        );
+
+        if (!oneSourceStation || !oneDestinationStation) {
+          return 0;
+        }
+
+        const oneDuration = this.findDuration(
+          oneSourceStation.arrivalTime,
+          oneDestinationStation.arrivalTime,
+        );
+
+        const twoSourceStation = two.stops.find(
+          (station) => station.stationName === this.searchParams.source,
+        );
+
+        const twoDestinationStation = two.stops.find(
+          (station) => station.stationName === this.searchParams.destination,
+        );
+
+        if (!twoSourceStation || !twoDestinationStation) {
+          return 0;
+        }
+
+        const twoDuration = this.findDuration(
+          twoSourceStation.arrivalTime,
+          twoSourceStation.arrivalTime,
+        );
+
+        return oneDuration - twoDuration;
+      });
+    }
+
     return trains;
   });
 
   private platformId = inject(PLATFORM_ID);
+
+  private findDuration(arrivalTime: string, reachedTime: string): number {
+    const arrival: time = {
+      hours: Number.parseInt(arrivalTime.split(':')[0]),
+      min: Number.parseInt(arrivalTime.split(':')[1]),
+    };
+    const reached: time = {
+      hours: Number.parseInt(reachedTime.split(':')[0]),
+      min: Number.parseInt(reachedTime.split(':')[1]),
+    };
+
+    if (arrival.hours === reached.hours && arrival.min === reached.min) {
+      return 24 * 60;
+    }
+
+    const arrivalMinutes = arrival.hours * 60 + arrival.min;
+    const reachedMinutes = reached.hours * 60 + reached.min;
+
+    if (arrivalMinutes > reachedMinutes) {
+      const hours = 24 - arrival.hours + reached.hours;
+      const minutes = Math.abs(arrival.min - reached.min);
+
+      const totalMinutes = hours * 60;
+      return totalMinutes - minutes;
+    }
+
+    return Math.abs(arrivalMinutes - reachedMinutes);
+  }
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -87,12 +207,10 @@ export class TrainAvaliability implements OnInit {
         history.state;
       this.trains.set(trains);
       this.searchParams = searchParams;
-
-      console.log(this.trains());
     }
   }
 
-  filters = signal<Filters>({ class: [], time: null, type: null });
+  filters = signal<Filters>({ class: [], time: null, type: null, sort: null });
 
   onFilterChange(filter: Filters) {
     this.filters.set(filter);

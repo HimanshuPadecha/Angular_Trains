@@ -27,8 +27,6 @@ export class UserContextService {
       this.user.set(JSON.parse(storedUser));
     }
 
-    console.log(this.user());
-
     this.initialized.set(true);
   }
 
