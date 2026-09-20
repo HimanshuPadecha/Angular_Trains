@@ -1,52 +1,56 @@
 <div class="bg-[#101522] min-h-screen flex flex-col pt-10">
-    <main class="flex-grow max-w-7xl mx-auto px-6 py-12 w-full relative z-10">
-      <div
-        class="space-y-16"
-      >
-        <div class="text-center max-w-3xl mx-auto">
-          <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">Redefining Train Travel</h1>
-          <p class="text-lg text-slate-400">
-            RailExpress is on a mission to make train ticket booking seamless, fast, and reliable. We believe your journey should start smoothly before you even board the train.
-          </p>
-        </div>
+  <main class="grow max-w-7xl mx-auto px-6 py-12 w-full relative z-10">
+    <div class="space-y-16">
+      <div class="text-center max-w-3xl mx-auto">
+        <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">Redefining Train Travel</h1>
+        <p class="text-lg text-slate-400">
+          RailExpress is on a mission to make train ticket booking seamless, fast, and reliable. We
+          believe your journey should start smoothly before you even board the train.
+        </p>
+      </div>
 
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-8 text-center backdrop-blur-sm">
+          <h3 class="text-4xl font-bold text-primary mb-2">5M+</h3>
+          <p class="text-slate-300">Tickets Booked</p>
+        </div>
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-8 text-center backdrop-blur-sm">
+          <h3 class="text-4xl font-bold text-primary mb-2">99.9%</h3>
+          <p class="text-slate-300">Uptime</p>
+        </div>
+        <div class="bg-white/5 border border-white/10 rounded-2xl p-8 text-center backdrop-blur-sm">
+          <h3 class="text-4xl font-bold text-primary mb-2">4.8/5</h3>
+          <p class="text-slate-300">User Rating</p>
+        </div>
+      </div>
+
+      <div class="mt-16">
+        <h2 class="text-3xl font-bold text-center text-white mb-10">Why Choose Us?</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div class="bg-white/5 border border-white/10 rounded-2xl p-8 text-center backdrop-blur-sm">
-            <h3 class="text-4xl font-bold text-primary mb-2">5M+</h3>
-            <p class="text-slate-300">Tickets Booked</p>
-          </div>
-          <div class="bg-white/5 border border-white/10 rounded-2xl p-8 text-center backdrop-blur-sm">
-            <h3 class="text-4xl font-bold text-primary mb-2">99.9%</h3>
-            <p class="text-slate-300">Uptime</p>
-          </div>
-          <div class="bg-white/5 border border-white/10 rounded-2xl p-8 text-center backdrop-blur-sm">
-            <h3 class="text-4xl font-bold text-primary mb-2">4.8/5</h3>
-            <p class="text-slate-300">User Rating</p>
-          </div>
-        </div>
-
-        <div class="mt-16">
-          <h2 class="text-3xl font-bold text-center text-white mb-10">Why Choose Us?</h2>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-
-              <div key={idx} class="bg-gradient-to-b from-white/5 to-transparent border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-colors">
-                <div class="w-14 h-14 bg-primary/20 rounded-xl flex items-center justify-center mb-6">
-                  <span class="material-icons text-primary text-2xl">feat.icon</span>
-                </div>
-                <h4 class="text-xl font-semibold text-white mb-3">feat.title</h4>
-                <p class="text-slate-400">feat.desc</p>
+          @for (feature of features; track $index) {
+            <div
+              class="bg-linear-to-b from-white/5 to-transparent border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-colors"
+            >
+              <div class="w-14 h-14 bg-primary/20 rounded-xl flex items-center justify-center mb-6">
+                <span class="material-icons text-primary text-2xl"> {{ feature.icon }} </span>
               </div>
-          </div>
+              <h4 class="text-xl font-semibold text-white mb-3">{{ feature.title }}</h4>
+              <p class="text-slate-400">{{ feature.desc }}</p>
+            </div>
+          }
         </div>
-
+      </div>
     </div>
-    </main>
+  </main>
 
-
-    <div class="fixed bottom-0 left-0 w-full h-1/2 z-0 opacity-20 pointer-events-none">
-      <div class="absolute inset-0 bg-gradient-to-t from-primary/10 via-transparent to-transparent"></div>
-      <div class="w-full h-full bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-primary/20 to-transparent"></div>
-    </div>
-
-    <app-footer></app-footer>
+  <div class="fixed bottom-0 left-0 w-full h-1/2 z-0 opacity-20 pointer-events-none">
+    <div
+      class="absolute inset-0 bg-linear-to-t from-primary/10 via-transparent to-transparent"
+    ></div>
+    <div
+      class="w-full h-full bg-[radial-gradient(ellipse_at_bottom,var(--tw-gradient-stops))] from-primary/20 to-transparent"
+    ></div>
   </div>
+
+  <app-footer></app-footer>
+</div>
