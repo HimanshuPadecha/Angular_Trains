@@ -1,0 +1,148 @@
+@if (train(); as train) {
+  <div
+    class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden hover:shadow-xl hover:shadow-primary/5 transition-all group"
+  >
+    <div class="p-6">
+      <div class="flex flex-wrap justify-between items-start gap-4 mb-8">
+        <div>
+          <div class="flex items-center gap-3 mb-1">
+            <h3 class="text-xl font-bold">{{ train.trainNumber }} - {{ train.trainName }}</h3>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded tracking-wider">
+              {{ train.trainType }}
+            </span>
+          </div>
+          <p class="text-slate-500 text-sm font-medium flex gap-1">
+            Runs on:
+            @for (day of train.daysOfOperation; track $index) {
+              <span class="text-slate-300 dark:text-slate-700"> {{ day }} </span>
+            }
+          </p>
+        </div>
+
+        <div class="flex items-center gap-8">
+          <div class="text-center">
+            <p class="text-2xl font-bold">{{ train.departureTime }}</p>
+            <p
+              class="text-xs font-bold text-slate-500 uppercase tracking-tighter"
+              [title]="train.source"
+            >
+              {{ train.source }}
+            </p>
+          </div>
+          <div class="flex flex-col items-center min-w-[120px]">
+            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">
+              {{ train.duration }}
+            </p>
+            <div class="w-full h-px bg-slate-200 dark:bg-slate-800 relative">
+              <div
+                class="absolute -top-1 left-0 w-2 h-2 rounded-full border-2 border-primary bg-background-dark"
+              ></div>
+              <div class="absolute -top-1 right-0 w-2 h-2 rounded-full bg-primary"></div>
+              <span
+                class="material-icons absolute left-1/2 -translate-x-1/2 -top-3 text-primary text-lg"
+                >train</span
+              >
+            </div>
+            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Stops</p>
+          </div>
+          <div class="text-center">
+            <p class="text-2xl font-bold">{{ train.arrivalTime }}</p>
+            <p
+              class="text-xs font-bold text-slate-500 uppercase tracking-tighter"
+              [title]="train.destination"
+            >
+              {{ train.destination }}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap gap-3">
+        @for (class of train.classes; track $index) {
+          <div
+            class="flex-1 min-w-[150px] p-4 rounded-xl border border-2 border-primary bg-primary/5 border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30 cursor-pointer hover:border-primary/50 transition-colors"
+          >
+            <div class="flex justify-between items-start mb-2">
+              <span class="font-bold text-sm text-slate-400">{{ class.className }}</span>
+              <span class="font-bold text-lg text-primary text-slate-400">₹ {{ class.fare }} </span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="w-2 h-2 rounded-full"></div>
+              <span class="text-xs font-bold uppercase"> {{ class.availableSeats }} </span>
+            </div>
+          </div>
+        }
+      </div>
+
+      @if (showRoute()) {
+        <div class="pt-6 border-t border-slate-200 dark:border-slate-800">
+          <h4 class="text-sm font-bold text-slate-500 uppercase tracking-widest mb-6">
+            Train Route
+          </h4>
+
+          @for (stop of train.stops; track $index) {
+            <div
+              class="relative border-l-2 border-slate-200 dark:border-slate-700 ml-4 space-y-6 pb-2"
+            >
+              <div class="relative pl-6">
+                <div
+                  class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full border-4 border-white dark:border-slate-900 bg-primary bg-slate-400 dark:bg-slate-600"
+                ></div>
+
+                <div class="grid grid-cols-12 gap-4 text-sm">
+                  <div
+                    class="col-span-6 md:col-span-4 font-bold text-slate-700 dark:text-slate-200"
+                  >
+                    {{ stop.stationName }}
+                    <p class="text-xs font-normal text-slate-400 truncate">
+                      Stop {{ stop.stopOrder }}
+                    </p>
+                  </div>
+                  <div class="col-span-3 text-center md:text-left">
+                    <span class="text-slate-500 text-xs uppercase hidden md:inline-block md:mr-2"
+                      >Arr</span
+                    >
+                    <span class="font-semibold text-slate-800 dark:text-slate-300"
+                      >{{stop.arrivalTime}}</span
+                    >
+                  </div>
+                  <div class="col-span-3 text-center md:text-left">
+                    <span class="text-slate-500 text-xs uppercase hidden md:inline-block md:mr-2"
+                      >Dep</span
+                    >
+                    <span class="font-semibold text-slate-800 dark:text-slate-300"
+                      >{{stop.departureTime}}</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+    <div
+      class="bg-slate-50 dark:bg-slate-800/50 p-4 border-t border-slate-200 dark:border-slate-800 flex justify-between items-center"
+    >
+      <div class="flex gap-4">
+        <button class="text-xs font-bold text-primary flex items-center gap-1 hover:underline">
+          <span class="material-icons text-sm">history</span>
+          Probablity
+        </button>
+        <button
+          class="text-xs font-bold flex items-center gap-1 transition-colors text-primary text-slate-400 hover:text-slate-200 cursor-pointer"
+          (click)="showRoute.set(!showRoute())"
+        >
+          <span class="material-icons text-sm">route</span>
+          View Route
+        </button>
+      </div>
+      <button
+        class="bg-primary hover:bg-primary/90 text-white px-10 py-3 rounded-lg font-bold shadow-lg shadow-primary/20 transition-all active:scale-95"
+      >
+        Book Now
+      </button>
+    </div>
+  </div>
+}

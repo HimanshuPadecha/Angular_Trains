@@ -1,0 +1,259 @@
+<aside class="space-y-6">
+  <div
+    class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm sticky top-28"
+  >
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="font-bold text-lg">Filters</h2>
+      <button
+        class="text-primary hover:underline text-xs font-semibold uppercase tracking-wider"
+        (click)="clearAllHandler()"
+      >
+        Clear All
+      </button>
+    </div>
+
+    <div class="mb-8">
+      <h3 class="text-sm font-bold uppercase text-slate-400 mb-4 tracking-widest">
+        Departure Time
+      </h3>
+      <div class="grid grid-cols-2 gap-2">
+        <button
+          [ngClass]="[
+            'p-3',
+            'rounded-lg',
+            'border',
+            'border-slate-200',
+            'flex',
+            'flex-col',
+            'items-center',
+            'gap-1',
+            'hover:border-primary/50',
+            'transition-colors',
+            'bg-slate-50',
+            'dark:bg-slate-800/50',
+            'cursor-pointer',
+            filters().time === 'MORNING' ? 'dark:border-blue-600' : 'dark:border-slate-800',
+          ]"
+          (click)="timeHandler('MORNING')"
+        >
+          <span
+            [ngClass]="[
+              'text-lg',
+              'material-icons',
+              'hover:text-primary',
+              filters().time === 'MORNING' ? 'dark:text-blue-700' : 'dark:text-slate-500',
+            ]"
+            >wb_twilight</span
+          >
+          <span
+            [ngClass]="[
+              'text-[10px]',
+              'font-medium',
+              'uppercase',
+              'text-primary',
+              filters().time === 'MORNING' ? 'dark:text-blue-600' : '',
+            ]"
+            >Morning</span
+          >
+          <span
+            [ngClass]="[
+              'text-[10px]',
+              'font-medium',
+              'uppercase',
+              'text-sm',
+              filters().time === 'MORNING' ? 'dark:text-blue-700' : 'dark:text-primary',
+            ]"
+            >00-06</span
+          >
+        </button>
+        <button
+          [ngClass]="[
+            'p-3',
+            'rounded-lg',
+            'border',
+            'border-slate-200',
+            'flex',
+            'flex-col',
+            'items-center',
+            'gap-1',
+            'hover:border-primary/50',
+            'transition-colors',
+            'bg-slate-50',
+            'dark:bg-slate-800/50',
+            'cursor-pointer',
+            filters().time === 'NOON' ? 'dark:border-blue-600' : 'dark:border-slate-800',
+          ]"
+          (click)="timeHandler('NOON')"
+        >
+          <span
+            [ngClass]="[
+              'text-lg',
+              'material-icons',
+              'hover:text-primary',
+              filters().time === 'NOON' ? 'dark:text-blue-700' : 'dark:text-slate-500',
+            ]"
+            >wb_sunny</span
+          >
+          <span
+            [ngClass]="[
+              'text-[10px]',
+              'font-medium',
+              'uppercase',
+              'text-primary',
+              filters().time === 'NOON' ? 'dark:text-blue-600' : '',
+            ]"
+            >Noon</span
+          >
+          <span
+            [ngClass]="[
+              'text-[10px]',
+              'font-medium',
+              'uppercase',
+              'text-sm',
+              filters().time === 'NOON' ? 'dark:text-blue-700' : 'dark:text-primary',
+            ]"
+            >06-12</span
+          >
+        </button>
+        <button
+          [ngClass]="[
+            'p-3',
+            'rounded-lg',
+            'border',
+            'border-slate-200',
+            'flex',
+            'flex-col',
+            'items-center',
+            'gap-1',
+            'hover:border-primary/50',
+            'transition-colors',
+            'bg-slate-50',
+            'dark:bg-slate-800/50',
+            'cursor-pointer',
+            filters().time === 'EVENING' ? 'dark:border-blue-600' : 'dark:border-slate-800',
+          ]"
+          (click)="timeHandler('EVENING')"
+        >
+          <span
+            [ngClass]="[
+              'text-lg',
+              'material-icons',
+              'hover:text-primary',
+              filters().time === 'EVENING' ? 'dark:text-blue-700' : 'dark:text-slate-500',
+            ]"
+            >light_mode</span
+          >
+          <span
+            [ngClass]="[
+              'text-[10px]',
+              'font-medium',
+              'uppercase',
+              'text-primary',
+              filters().time === 'EVENING' ? 'dark:text-blue-600' : '',
+            ]"
+            >Evening</span
+          >
+          <span
+            [ngClass]="[
+              'text-[10px]',
+              'font-medium',
+              'uppercase',
+              'text-sm',
+              filters().time === 'EVENING' ? 'dark:text-blue-700' : 'dark:text-primary',
+            ]"
+            >12-18</span
+          >
+        </button>
+        <button
+          [ngClass]="[
+            'p-3',
+            'rounded-lg',
+            'border',
+            'border-slate-200',
+            'flex',
+            'flex-col',
+            'items-center',
+            'gap-1',
+            'hover:border-primary/50',
+            'transition-colors',
+            'bg-slate-50',
+            'dark:bg-slate-800/50',
+            'cursor-pointer',
+            filters().time === 'NIGHT' ? 'dark:border-blue-600' : 'dark:border-slate-800',
+          ]"
+          (click)="timeHandler('NIGHT')"
+        >
+          <span
+            [ngClass]="[
+              'text-lg',
+              'material-icons',
+              'hover:text-primary',
+              filters().time === 'NIGHT' ? 'dark:text-blue-700' : 'dark:text-slate-500',
+            ]"
+            >dark_mode</span
+          >
+          <span
+            [ngClass]="[
+              'text-[10px]',
+              'font-medium',
+              'uppercase',
+              'text-primary',
+              filters().time === 'NIGHT' ? 'dark:text-blue-600' : '',
+            ]"
+            >NIGHT</span
+          >
+          <span
+            [ngClass]="[
+              'text-[10px]',
+              'font-medium',
+              'uppercase',
+              'text-sm',
+              filters().time === 'NIGHT' ? 'dark:text-blue-700' : 'dark:text-primary',
+            ]"
+            >18-00</span
+          >
+        </button>
+      </div>
+    </div>
+
+    <div class="mb-8">
+      <h3 class="text-sm font-bold uppercase text-slate-400 mb-4 tracking-widest">Journey Class</h3>
+      <div class="space-y-3">
+        @for (journey of journeys; track journey.id) {
+          <label class="flex items-center gap-3 cursor-pointer group select-none">
+            <input
+              class="w-5 h-5 rounded-2xl border-slate-300 dark:border-slate-700 bg-transparent text-primary focus:ring-primary"
+              type="checkbox"
+              [checked]="filters().class.includes(journey.id)"
+              (change)="handleClassChange(journey.id)"
+            />
+            <span
+              class="text-sm font-medium text-slate-100 group-hover:text-primary transition-colors"
+            >
+              {{ journey.label }}
+            </span>
+          </label>
+        }
+      </div>
+    </div>
+
+    <div>
+      <h3 class="text-sm font-bold uppercase text-slate-400 mb-4 tracking-widest">Train Type</h3>
+      <div class="space-y-3">
+        @for (train of trainTypes; track train.id) {
+          <label class="flex items-center gap-3 cursor-pointer group select-none">
+            <input
+              class="w-5 h-5 rounded border-slate-300 dark:border-slate-700 bg-transparent text-primary focus:ring-primary"
+              type="checkbox"
+              [checked]="filters().type === train.id"
+              (change)="handleTrainTypeChange(train.id)"
+            />
+            <span class="text-sm font-medium group-hover:text-primary transition-colors">
+              {{ train.label }}
+            </span>
+          </label>
+        }
+      </div>
+    </div>
+  </div>
+</aside>

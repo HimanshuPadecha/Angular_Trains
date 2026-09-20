@@ -1,0 +1,73 @@
+<nav
+  class="sticky top-0 z-50 w-full border-b border-white/10 bg-background-dark/80 backdrop-blur-md print:hidden"
+>
+  <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+    <a routerLink="/" class="flex items-center gap-2">
+      <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+        <span class="material-icons text-white">train</span>
+      </div>
+      <span class="text-xl font-bold tracking-tight text-white">
+        Rail<span class="text-primary">Express</span>
+      </span>
+    </a>
+    <div class="hidden md:flex items-center gap-8">
+      @for (item of navItems; track $index) {
+        <a [routerLink]="item.path" class="text-primary font-medium">
+          {{ item.name }}
+        </a>
+      }
+    </div>
+    <div class="flex items-center gap-4">
+      <div class="flex items-center gap-4">
+        @if (!userContext.isInitialized()) {
+          <span>Loading...</span>
+        }
+        @if (userContext.isInitialized() && userContext.isLoggedIn()) {
+          <div
+            class="flex items-center gap-2 bg-white/5 px-3 py-1.5 rounded-full border border-white/10"
+          >
+            <label
+              class="relative w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden cursor-pointer group shrink-0"
+            >
+              <input
+                type="file"
+                accept="image/*"
+                class="hidden"
+                (change)="onProfileImageChange($event)"
+              />
+              <img alt="username" class="w-full h-full object-cover" [src]="profileImage()" />
+
+              <div
+                class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
+              >
+                <span class="material-icons text-white text-[12px]"> camera_alt </span>
+              </div>
+            </label>
+            <span class="text-sm font-medium text-slate-300">
+              {{ userContext.user()?.username }}
+            </span>
+          </div>
+          <button
+            (click)="handleLogout()"
+            class="px-4 py-2 text-sm font-medium hover:bg-white/5 rounded-lg transition-colors text-red-400 hover:text-red-300 flex items-center gap-1"
+          >
+            Logout
+          </button>
+        }
+      </div>
+      @if (userContext.isInitialized() && !userContext.isLoggedIn()) {
+        <a
+          routerLink="/login"
+          class="px-4 py-2 text-sm font-medium hover:bg-white/5 rounded-lg transition-colors text-white"
+        >
+          Login
+        </a>
+        <a
+          class="px-5 py-2 bg-primary hover:bg-primary/90 rounded-lg text-sm font-semibold transition-all text-white"
+        >
+          Sign Up
+        </a>
+      }
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,19 @@
+<div
+  class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen font-display"
+>
+  <main class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-12 gap-8">
+    <app-sidebar-filters
+      class="col-span-12 lg:col-span-3"
+      [filters]="filters()"
+      (filtersChange)="onFilterChange($event)"
+    ></app-sidebar-filters>
+
+    <app-train-list
+      [trains]="filteredTrains()"
+      [searchParams]="searchParams"
+      class="col-span-12 lg:col-span-9"
+    ></app-train-list>
+  </main>
+
+  <app-mobile-nav></app-mobile-nav>
+</div>

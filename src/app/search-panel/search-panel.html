@@ -1,0 +1,138 @@
+<div class="glass-card rounded-2xl p-8 shadow-2xl relative z-10 hover-lift">
+  <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+    <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4 relative">
+      <app-station-input
+        stationPlaceholder="NDSL - New Delhi"
+        inputLabel="From Station"
+        icon="location_on"
+        [query]="toggleStation ? toStation() : fromStation()"
+        (queryOutput)="toggleStation ? toStation.set($event) : fromStation.set($event)"
+      ></app-station-input>
+
+      <button
+        type="button"
+        class="absolute left-1/2 top-10 -translate-x-1/2 w-10 h-10 bg-[#1a1f2c] border border-white/10 rounded-full flex items-center justify-center z-10 hover:border-primary hover:text-primary transition-all text-slate-400 shadow-lg group"
+        (click)="handleToggle()"
+      >
+        <span
+          class="material-icons text-lg group-hover:rotate-180 transition-transform duration-300"
+          >swap_horiz</span
+        >
+      </button>
+      <app-station-input
+        stationPlaceholder="BCT - Mumbai Central"
+        inputLabel="To Station"
+        icon="near_me"
+        [query]="toggleStation ? fromStation() : toStation()"
+        (queryOutput)="toggleStation ? fromStation.set($event) : toStation.set($event)"
+      ></app-station-input>
+    </div>
+
+    <div class="space-y-2">
+      <label class="text-xs font-semibold uppercase tracking-wider text-slate-500"
+        >Journey Date</label
+      >
+      <div class="relative">
+        <span class="material-icons absolute left-3 top-3 text-primary text-xl"
+          >calendar_today</span
+        >
+        <input
+          class="w-full bg-white/5 border-white/10 rounded-lg py-3 pl-11 focus:ring-primary focus:border-primary text-white scheme-dark transition-colors"
+          type="date"
+          value="date"
+          [(ngModel)]="selectedDate"
+          [min]="today"
+        />
+      </div>
+    </div>
+
+    <div class="space-y-2">
+      <label class="text-xs font-semibold uppercase tracking-wider text-slate-500"
+        >Travel Class</label
+      >
+      <div class="relative">
+        <span class="material-icons absolute left-3 top-3 text-primary text-xl"
+          >airline_seat_recline_extra</span
+        >
+        <select
+          class="w-full bg-white/5 border-white/10 rounded-lg py-3 pl-11 pr-10 focus:ring-primary focus:border-primary text-white appearance-none transition-colors"
+          [(ngModel)]="travelOpt"
+        >
+          <option value="ALL" class="bg-[#1a1f2c] text-white" selected>All Classes</option>
+          @for (option of travelingOptions; track $index) {
+            <option [value]="option.value" class="bg-[#1a1f2c] text-white">
+              {{ option.text }}
+            </option>
+          }
+        </select>
+        <span class="material-icons absolute right-3 top-3 text-slate-500 pointer-events-none"
+          >expand_more</span
+        >
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mt-8">
+    <div class="space-y-2">
+      <label class="text-xs font-semibold uppercase tracking-wider text-slate-500"
+        >Train Type</label
+      >
+      <div class="relative">
+        <span class="material-icons absolute left-3 top-3 text-primary text-xl">train</span>
+        <select
+          class="w-full bg-white/5 border-white/10 rounded-lg py-3 pl-11 pr-10 focus:ring-primary focus:border-primary text-white appearance-none transition-colors"
+          [(ngModel)]="trainOpt"
+        >
+          <option value="ALL" class="bg-[#1a1f2c] text-white">All Types</option>
+          @for (option of trainType; track $index) {
+            <option [value]="option.value" class="bg-[#1a1f2c] text-white">
+              {{ option.text }}
+            </option>
+          }
+        </select>
+        <span class="material-icons absolute right-3 top-3 text-slate-500 pointer-events-none"
+          >expand_more</span
+        >
+      </div>
+    </div>
+
+    <div class="lg:col-span-2 flex items-center gap-6 pt-6 opacity-0">
+      <label class="flex items-center gap-3 cursor-pointer group">
+        <input
+          class="w-5 h-5 rounded border-white/10 bg-white/5 text-primary focus:ring-offset-background-dark transition-colors"
+          type="checkbox"
+        />
+        <span class="text-sm text-slate-300 group-hover:text-white transition-colors"
+          >Flexible with Date</span
+        >
+      </label>
+      <label class="flex items-center gap-3 cursor-pointer group">
+        <input
+          class="w-5 h-5 rounded border-white/10 bg-white/5 text-primary focus:ring-offset-background-dark transition-colors"
+          type="checkbox"
+        />
+        <span class="text-sm text-slate-300 group-hover:text-white transition-colors"
+          >Train with Available Berth</span
+        >
+      </label>
+    </div>
+
+    <div class="flex items-end">
+      <button
+        class="gradient-btn w-full py-4 rounded-lg font-bold text-lg flex items-center justify-center gap-2 text-white hover:shadow-[0_0_20px_rgba(var(--primary-rgb),0.4)] transition-all disabled:opacity-75"
+        (click)="handleTrainSearch()"
+      >
+        <!-- Loading state for fetching trains -->
+
+        @if (loading()) {
+          <span
+            class="w-6 h-6 border-2 border-white/40 border-t-white rounded-full animate-spin"
+          ></span>
+        } @else {
+          <span>SEARCH TRAINS</span>
+          <span class="material-icons">arrow_forward</span>
+        }
+      </button>
+    </div>
+  </div>
+</div>

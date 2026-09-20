@@ -1,0 +1,42 @@
+<div class="space-y-2">
+  <div class="space-y-2">
+    <label class="text-xs font-semibold uppercase tracking-wider text-slate-500"
+      >{{ inputLabel() }}
+    </label>
+    <div class="relative group">
+      <span class="material-icons absolute left-3 top-3 text-primary text-xl">{{ icon() }}</span>
+      <input
+        class="w-full bg-white/5 border-white/10 rounded-lg py-3 pl-11 pr-10 focus:ring-primary focus:border-primary text-white placeholder-slate-500 transition-colors"
+        [placeholder]="stationPlaceholder()"
+        type="text"
+        [value]="query()"
+        (input)="onQueryChange($event)"
+        autoComplete="off"
+      />
+      <div class="absolute right-3 top-3">
+        <!-- Loader -->
+        @if (loading) {
+          <div
+            class="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin"
+          ></div>
+        }
+      </div>
+
+      @if (stations().length > 0) {
+        <ul
+          class="absolute z-50 w-full mt-2 bg-[#1a1f2c] border border-white/10 rounded-lg shadow-2xl max-h-60 overflow-y-auto top-full custom-scrollbar backdrop-blur-xl"
+        >
+          @for (station of stations(); track $index) {
+            <li
+              class="px-4 py-3 hover:bg-white/10 cursor-pointer text-slate-300 hover:text-white transition-colors flex items-center gap-3 border-b border-white/5 last:border-0"
+              (click)="selectStation(station)"
+            >
+              <span class="material-icons text-primary/70 text-sm">train</span>
+              <span class="truncate"> {{ station }} </span>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+  </div>
+</div>
