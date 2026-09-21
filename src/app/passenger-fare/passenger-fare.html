@@ -1,0 +1,33 @@
+<style>
+  .glass-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .glass-input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+  }
+  .glass-input:focus {
+    border-color: #0d6cf2;
+    background: rgba(13, 108, 242, 0.05);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(13, 108, 242, 0.2);
+  }
+</style>
+<div
+  class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen"
+>
+  <main class="max-w-7xl mx-auto px-4 py-8">
+    <app-traininfo-banner></app-traininfo-banner>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <app-passager-forms class="lg:col-span-8 space-y-6"></app-passager-forms>
+      <app-fare-summary class="lg:col-span-4 sticky top-24"></app-fare-summary>
+    </div>
+  </main>
+
+  <app-footer-disclaimer></app-footer-disclaimer>
+</div>

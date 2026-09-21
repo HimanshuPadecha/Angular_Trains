@@ -2,8 +2,8 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { UserContextService } from '../user-context';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { baseUrl } from '../url';
-import { Search, Response, Error } from '../../types';
-import { RouterLink } from '@angular/router';
+import { Search, Response, Error, Train } from '../../types';
+import { Router, RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -16,7 +16,9 @@ export class RecentSearches implements OnInit {
   userContext = inject(UserContextService);
   private http = inject(HttpClient);
   searches = signal<Search[] | null>(null);
+
   private toastr = inject(ToastrService);
+  private router = inject(Router);
 
   ngOnInit(): void {
     if (this.userContext.isInitialized() && this.userContext.isLoggedIn()) {
@@ -46,6 +48,28 @@ export class RecentSearches implements OnInit {
           }
 
           this.toastr.error(backendError.message);
+        },
+      });
+  }
+
+  fetchTrains(source: string, destination: string) {
+    this.http
+      .post<Response<Train[]>>(`${baseUrl}/trains/search`, { source, destination })
+      .subscribe({
+        next: (response) => {
+          const trains = response.response.data;
+
+          this.toastr.success(`Trains for ${source} to ${destination} Fetched successfully !! `);
+
+          this.router.navigate(['/train-availability'], {
+            state: {
+              trains,
+              searchParams: { source, destination },
+            },
+          });
+        },
+        error: (error) => {
+          console.log(error.error);
         },
       });
   }

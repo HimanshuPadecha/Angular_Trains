@@ -6,6 +6,7 @@ import { TrainAvaliability } from './train-avaliability/train-avaliability';
 import { AboutUs } from './about-us/about-us';
 import { FrequentlyAskedQuestions } from './frequently-asked-questions/frequently-asked-questions';
 import { Contact } from './contact/contact';
+import { PassengerFare } from './passenger-fare/passenger-fare';
 
 export const routes: Routes = [
   {
@@ -37,5 +38,9 @@ export const routes: Routes = [
   {
     path: 'contact',
     component: Contact,
+  },
+  {
+    path: 'passenger-fare',
+    component: PassengerFare,
   },
 ];
