@@ -17,10 +17,14 @@ export class Auth {
     username: string;
     password: string;
   }): Observable<Response<{ accessToken: string; user: User }>> {
-    return this.http.post<Response<{ accessToken: string; user: User }>>(
-      `${baseUrl}/users/login`,
-      { username, password },
-    );
+    return this.http.post<Response<{ accessToken: string; user: User }>>(`${baseUrl}/users/login`, {
+      username,
+      password,
+    });
+  }
+
+  signup(formData: FormData): Observable<Response<{ user: User }>> {
+    return this.http.post<Response<{ user: User }>>(`${baseUrl}/users/signup`, formData);
   }
 
   logout() {

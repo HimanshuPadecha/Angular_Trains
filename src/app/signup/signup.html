@@ -1,0 +1,127 @@
+<div
+  class="min-h-[calc(100vh-80px)] flex items-center justify-center p-4 relative overflow-hidden pt-12"
+>
+  <div
+    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/20 rounded-full blur-[120px] pointer-events-none opacity-50 z-0"
+  ></div>
+
+  <div
+    class="w-full max-w-md bg-[#182032] border border-white/10 p-8 rounded-2xl backdrop-blur-xl shadow-[0_0_40px_rgba(0,0,0,0.5)] relative z-10 transition-all"
+  >
+    <div class="text-center mb-8">
+      <div
+        class="w-14 h-14 bg-primary text-white rounded-xl flex items-center justify-center mx-auto mb-5 shadow-lg shadow-primary/30"
+      >
+        <span class="material-icons text-3xl">person_add</span>
+      </div>
+      <h2 class="text-2xl font-bold tracking-tight text-white mb-2">Create Account</h2>
+      <p class="text-slate-400 text-sm">Join us to manage your journeys and bookings.</p>
+    </div>
+
+    <form class="space-y-5" (submit)="handleSubmit($event)">
+      @if (error()) {
+        <div
+          class="bg-red-500/10 border border-red-500/20 text-red-400 text-sm p-3 rounded-lg text-center"
+        >
+          {{ error() }}
+        </div>
+      }
+
+      <div>
+        <label class="block text-xs font-semibold text-slate-400 uppercase tracking-widest mb-2"
+          >Username</label
+        >
+        <div class="relative">
+          <span
+            class="material-icons absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm"
+            >person</span
+          >
+          <input
+            type="text"
+            [value]="username()"
+            (input)="username.set($event.target.value)"
+            class="w-full bg-white/5 border border-white/10 rounded-xl pl-11 pr-4 py-3.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+            placeholder="Unique username"
+            required
+          />
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-slate-400 uppercase tracking-widest mb-2"
+          >Password</label
+        >
+        <div class="relative">
+          <span
+            class="material-icons absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 text-sm"
+            >lock</span
+          >
+          <input
+            [type]="showPassword() ? 'text' : 'password'"
+            [value]="password()"
+            (input)="password.set($event.target.value)"
+            class="w-full bg-white/5 border border-white/10 rounded-xl pl-11 pr-12 py-3.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
+            placeholder="••••••••••••••••"
+            required
+          />
+          <button
+            type="button"
+            class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 transition-colors flex items-center justify-center p-1"
+            (click)="showPassword.set(!showPassword())"
+          >
+            <span class="material-icons text-sm">
+              {{ showPassword() ? 'visibility' : 'visibility_off' }}
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <label
+          class="block text-xs font-semibold text-slate-400 uppercase tracking-widest mb-2 mt-4 flex justify-between"
+        >
+          Profile Photo
+          <span class="text-[10px] text-slate-600 bg-slate-800 px-2 py-0.5 rounded ml-2"
+            >Optional</span
+          >
+        </label>
+        <div class="relative mt-2 flex items-center gap-3">
+          <div
+            class="w-12 h-12 rounded-full border border-white/10 bg-white/5 overflow-hidden flex items-center justify-center flex-shrink-none"
+          >
+            <img [src]="imagePreviewUrl()" class="w-full h-full object-cover" />
+          </div>
+          <input
+            type="file"
+            accept="image/*"
+            class="w-full text-sm text-slate-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-white/5 file:text-slate-300 hover:file:bg-white/10 file:transition-all outline-none"
+            (change)="onFileSelected($event)"
+          />
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3.5 rounded-xl transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2 mt-6 active:scale-[0.98] disabled:opacity-50"
+      >
+        @if (!loading()) {
+          sign up <span class="material-icons text-sm">arrow_forward</span>
+        } @else {
+          <span class="material-icons rotating-icon opacity-50">autorenew</span>
+          <span class="opacity-50">Signing you in...</span>
+        }
+      </button>
+    </form>
+
+    <div class="mt-8 relative flex items-center justify-center">
+      <div class="absolute inset-0 flex items-center">
+        <div class="w-full border-t border-white/10"></div>
+      </div>
+    </div>
+
+    <p variants="{itemVariants}" class="mt-8 text-center text-sm text-slate-400">
+      Already have an account?
+      <a href="/login" class="text-primary font-semibold hover:underline transition-all">Log In</a>
+    </p>
+  </div>
+</div>

@@ -11,14 +11,14 @@ import {
 import { Auth } from '../auth';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { UserContextService } from '../user-context';
 import { CONSTS } from '../../types';
 import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-login',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })

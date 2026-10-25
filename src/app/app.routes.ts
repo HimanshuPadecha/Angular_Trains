@@ -9,6 +9,7 @@ import { Contact } from './contact/contact';
 import { PassengerFare } from './passenger-fare/passenger-fare';
 import { authRequireGuard } from './guards/auth-require-guard';
 import { bookingGuard } from './guard/booking-guard';
+import { Signup } from './signup/signup';
 
 export const routes: Routes = [
   {
@@ -19,6 +20,11 @@ export const routes: Routes = [
   {
     path: 'login',
     component: Login,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'signup',
+    component: Signup,
     canActivate: [authGuard],
   },
   {

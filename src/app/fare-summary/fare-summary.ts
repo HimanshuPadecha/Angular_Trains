@@ -91,6 +91,7 @@ export class FareSummary {
 
     console.log(this.booking.getFareRouteInfo());
 
+    // redirect to the /payment route 
     // this.router.navigate(['/payment'])
   }
 }
