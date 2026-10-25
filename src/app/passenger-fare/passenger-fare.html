@@ -21,11 +21,31 @@
   class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen"
 >
   <main class="max-w-7xl mx-auto px-4 py-8">
-    <app-traininfo-banner></app-traininfo-banner>
+    <app-traininfo-banner
+      [train]="bookingService.getTrainInfo().train!"
+      [selectedClass]="bookingService.getTrainInfo().selectedClass!"
+    ></app-traininfo-banner>
 
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-      <app-passager-forms class="lg:col-span-8 space-y-6"></app-passager-forms>
-      <app-fare-summary class="lg:col-span-4 sticky top-24"></app-fare-summary>
+      <app-passager-forms
+        class="lg:col-span-8 space-y-6"
+        [email]="email()"
+        [insureance]="insureance()"
+        [passengers]="passengers()"
+        [phone]="phone()"
+        (passengersUpdate)="setPassengers($event)"
+        (phoneUpdate)="phone.set($event)"
+        (insurenceUpdate)="insureance.set($event)"
+        (emailUpdate)="email.set($event)"
+      ></app-passager-forms>
+      <app-fare-summary
+        [selectedClass]="bookingService.getTrainInfo().selectedClass!"
+        [hasInsurence]="insureance()"
+        [passengers]="passengers()"
+        class="lg:col-span-4 sticky top-24"
+        [email]="email()"
+        [phone]="phone()"
+      ></app-fare-summary>
     </div>
   </main>
 

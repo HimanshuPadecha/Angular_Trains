@@ -17,6 +17,8 @@ export class Navbar {
   private router = inject(Router);
   private toastr = inject(ToastrService);
   private authService = inject(Auth);
+  userContext = inject(UserContextService);
+  private http = inject(HttpClient);
 
   public navItems = [
     { name: 'Home', path: '/' },
@@ -26,9 +28,6 @@ export class Navbar {
     { name: 'Contact', path: '/contact' },
     { name: 'Bookings', path: '/booking-confirmation' },
   ];
-
-  userContext = inject(UserContextService);
-  private http = inject(HttpClient);
 
   profileImage = signal(this.userContext.user()?.profileImg);
 

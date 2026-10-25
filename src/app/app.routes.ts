@@ -7,6 +7,8 @@ import { AboutUs } from './about-us/about-us';
 import { FrequentlyAskedQuestions } from './frequently-asked-questions/frequently-asked-questions';
 import { Contact } from './contact/contact';
 import { PassengerFare } from './passenger-fare/passenger-fare';
+import { authRequireGuard } from './guards/auth-require-guard';
+import { bookingGuard } from './guard/booking-guard';
 
 export const routes: Routes = [
   {
@@ -40,7 +42,13 @@ export const routes: Routes = [
     component: Contact,
   },
   {
-    path: 'passenger-fare',
-    component: PassengerFare,
+    path: 'booking',
+    canActivate: [authRequireGuard, bookingGuard],
+    children: [
+      {
+        path: 'passenger-fare',
+        component: PassengerFare,
+      },
+    ],
   },
 ];

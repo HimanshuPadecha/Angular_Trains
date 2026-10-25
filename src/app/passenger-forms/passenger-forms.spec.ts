@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PassagerForms } from './passager-forms';
+import { PassagerForms } from './passenger-forms';
 
 describe('PassagerForms', () => {
   let component: PassagerForms;

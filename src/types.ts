@@ -124,6 +124,14 @@ export interface SearchTrainsParams {
   availableBerth?: string;
 }
 
+export interface Class {
+  className: string;
+  fare: number;
+  totalSeats: number;
+  availableSeats: number;
+  _id: string;
+}
+
 export interface Train {
   _id: string;
   trainNumber: string;
@@ -143,13 +151,7 @@ export interface Train {
     distance?: number;
     _id: string;
   }>;
-  classes: Array<{
-    className: string;
-    fare: number;
-    totalSeats: number;
-    availableSeats: number;
-    _id: string;
-  }>;
+  classes: Array<Class>;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -189,8 +191,25 @@ export const timeMap: { timezone: times; start: number; end: number }[] = [
   },
 ];
 
-
 export type time = {
-  hours : number , 
-  min : number
-}
+  hours: number;
+  min: number;
+};
+
+export type Prefs = 'lower' | 'middle' | 'upper' | 'sidelower' | 'sideupper';
+
+export type Passenger = {
+  id: number;
+  name: string;
+  age: number;
+  gender: 'male' | 'female';
+  pref: Prefs | null;
+};
+
+export type PassengerFromBackend = {
+  _id: number;
+  fullName: string;
+  gender: 'male' | 'female';
+  age: string;
+  berthPreference?: string;
+};

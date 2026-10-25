@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
+import { Class, Train } from '../../types';
 
 @Component({
   selector: 'app-traininfo-banner',
@@ -6,4 +7,7 @@ import { Component } from '@angular/core';
   templateUrl: './traininfo-banner.html',
   styleUrl: './traininfo-banner.css',
 })
-export class TraininfoBanner {}
+export class TraininfoBanner {
+  train = input.required<Train>();
+  selectedClass = input.required<Class>()
+}
