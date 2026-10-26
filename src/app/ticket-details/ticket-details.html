@@ -1,0 +1,147 @@
+<div
+  class="bg-white dark:bg-slate-900/40 border border-slate-200 dark:border-white/5 rounded-xl overflow-hidden shadow-2xl"
+>
+  <div class="p-8">
+    <div class="flex flex-col md:flex-row justify-between gap-8 mb-10">
+      <div class="flex-1">
+        <div class="flex items-center gap-2 mb-4 text-primary font-semibold">
+          <span class="material-icons-round text-sm">directions_train</span>
+          <span class="text-sm uppercase tracking-wider"
+            >{{ currentBooking().train.trainNumber }} • {{ currentBooking().train.trainName }}</span
+          >
+        </div>
+
+        <div class="flex items-center justify-between gap-4">
+          <div class="text-left">
+            <h4 class="text-2xl font-bold">sourceInfo.code</h4>
+            <p class="text-sm text-slate-500">{{ currentBooking().train.source }}</p>
+            <p class="text-lg font-semibold mt-1">{{ currentBooking().train.departureTime }}</p>
+          </div>
+
+          <div class="flex-1 flex flex-col items-center px-4">
+            <p class="text-[10px] text-slate-500 font-bold uppercase mb-1">duration</p>
+            <div class="w-full flex items-center gap-2">
+              <div
+                class="h-[2px] flex-1 bg-gradient-to-r from-transparent via-slate-300 dark:via-slate-700 to-transparent"
+              ></div>
+              <span class="material-icons-round text-primary text-sm">circle</span>
+              <div
+                class="h-[2px] flex-1 bg-gradient-to-r from-transparent via-slate-300 dark:via-slate-700 to-transparent"
+              ></div>
+            </div>
+            <p class="text-[10px] text-slate-500 font-bold uppercase mt-1">Non-stop</p>
+          </div>
+
+          <div class="text-right">
+            <h4 class="text-2xl font-bold">destInfo.code</h4>
+            <p class="text-sm text-slate-500">{{ currentBooking().train.destination }}</p>
+            <p class="text-lg font-semibold mt-1">{{ currentBooking().train.arrivalTime }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="md:w-px md:h-24 bg-slate-200 dark:bg-white/10 hidden md:block"></div>
+
+      <div class="md:w-48">
+        <div class="bg-white p-2 rounded-lg inline-block shadow-lg">
+          <img
+            alt="Ticket QR"
+            class="w-24 h-24"
+            data-alt="Secure QR code for digital ticket verification"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuACKVIAGrNjZXJcEVfZLhPKwzZ9TnLY_BdOmDFz0_Bc8wGZR9u2VBo_v3o1KVyGudmZqQc2FbyTT5MLydXfIXUyH8Gu9KcoxchrweYjS6OSTbFtCs9oVov6mZeB54yuzkDPCP8KCvYL-w3DAnkGgTfJ5sSshUkQU7tw5f0UwGXDRLfn01VeYVqdf_QdkKx0hfwEGA4c6RANCb5P36NtUOEqBuBiWVq7TBEtlI8HnhJ0sZE2TGjoV8P7vKdyAecMR9-oaoLR_2XEYNWi"
+          />
+        </div>
+        <p class="text-[10px] text-slate-500 mt-2 text-center uppercase tracking-tighter">
+          Scan for E-Ticket
+        </p>
+      </div>
+    </div>
+
+    <div
+      class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8 p-4 bg-slate-50 dark:bg-white/5 rounded-lg border border-slate-100 dark:border-white/5"
+    >
+      <div>
+        <p class="text-[10px] text-slate-500 uppercase font-bold">Class</p>
+        <p class="font-semibold">{{ currentBooking().className }}</p>
+      </div>
+      <div>
+        <p class="text-[10px] text-slate-500 uppercase font-bold">Quota</p>
+        <p class="font-semibold">General</p>
+      </div>
+      <div>
+        <p class="text-[10px] text-slate-500 uppercase font-bold">Booking Date</p>
+        <p class="font-semibold">{{ currentBooking().createdAt.toString().split('T')[0] }}</p>
+      </div>
+      <div>
+        <p class="text-[10px] text-slate-500 uppercase font-bold">Transaction ID</p>
+        <p class="font-semibold">{{ currentBooking()._id }}</p>
+      </div>
+    </div>
+
+    <div class="mb-2">
+      <h5 class="text-sm font-bold uppercase tracking-widest mb-4 flex items-center gap-2">
+        <span class="material-icons-round text-primary text-sm">group</span>
+        Passenger Details
+      </h5>
+      <div class="overflow-hidden border border-slate-200 dark:border-white/5 rounded-lg">
+        <table class="w-full text-left text-sm">
+          <thead class="bg-slate-50 dark:bg-white/5 text-slate-500">
+            <tr>
+              <th class="px-4 py-3 font-semibold">Name</th>
+              <th class="px-4 py-3 font-semibold text-center">Age/Sex</th>
+              <th class="px-4 py-3 font-semibold text-center">Status</th>
+              <th class="px-4 py-3 font-semibold text-right">Coach/Berth</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 dark:divide-white/5">
+            @for (passenger of currentBooking().passengers; track $index) {
+              <tr>
+                <td class="px-4 py-4 font-medium">{{ passenger.fullName }}</td>
+                <td class="px-4 py-4 text-center">{{ passenger.age }} / {{ passenger.gender }}</td>
+                <td class="px-4 py-4 text-center">
+                  <span
+                    class="px-2 py-1 text-[10px] font-bold rounded bg-green-500/10 text-green-500 bg-amber-500/10 text-amber-500"
+                  >
+                    {{ passenger.status }}
+                  </span>
+                </td>
+                <td class="px-4 py-4 text-right font-bold">berth</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="ticket-cutout dashed-line mx-8"></div>
+
+  <div class="p-8 bg-slate-50/50 dark:bg-white/[0.02]">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+      <div>
+        <p class="text-xs text-slate-500 uppercase font-bold">Total Fare Paid</p>
+        <div class="flex items-baseline gap-1">
+          <span class="text-sm font-semibold">₹</span>
+          <span class="text-3xl font-extrabold">
+            {{ currentBooking().fareBreakdown.totalAmount }}
+          </span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4 w-full md:w-auto print:hidden">
+        <button
+          class="flex-1 md:flex-none px-6 py-3 glass-effect rounded-lg font-bold text-sm flex items-center justify-center gap-2 border border-primary/20 hover:bg-primary/20 transition-all"
+          (click)="handleDownloadPDF()"
+        >
+          Download PDF
+        </button>
+        <button
+          class="flex-1 md:flex-none px-6 py-3 bg-primary text-white rounded-lg font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-primary/20 hover:opacity-90 transition-all"
+          (click)="handlePrint()"
+        >
+          Print Ticket
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

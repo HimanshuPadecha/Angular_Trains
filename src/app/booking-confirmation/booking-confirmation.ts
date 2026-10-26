@@ -5,16 +5,18 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { baseUrl } from '../url';
 import { Booking, Error, Response } from '../../types';
 import { ToastrService } from 'ngx-toastr';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-booking-confirmation',
-  imports: [Footer],
+  imports: [Footer, RouterLink],
   templateUrl: './booking-confirmation.html',
   styleUrl: './booking-confirmation.css',
 })
 export class BookingConfirmation implements OnInit {
   private http = inject(HttpClient);
   private toaster = inject(ToastrService);
+  private router = inject(Router);
 
   bookings = signal<Booking[] | null>(null);
   loading = signal(false);
@@ -36,6 +38,15 @@ export class BookingConfirmation implements OnInit {
         const backendError = error.error as Error;
 
         this.toaster.error(backendError.message);
+      },
+    });
+  }
+
+  navigateToCard(id: string) {
+    
+    this.router.navigate(['/booking-confirmation/' + id], {
+      state: {
+        bookings: this.bookings(),
       },
     });
   }

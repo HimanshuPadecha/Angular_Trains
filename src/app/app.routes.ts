@@ -12,6 +12,8 @@ import { bookingGuard } from './guard/booking-guard';
 import { Signup } from './signup/signup';
 import { Payment } from './payment/payment';
 import { BookingConfirmation } from './booking-confirmation/booking-confirmation';
+import { TrainCard } from './train-card/train-card';
+import { BookingCard } from './booking-card/booking-card';
 
 export const routes: Routes = [
   {
@@ -52,6 +54,11 @@ export const routes: Routes = [
   {
     path: 'booking-confirmation',
     component: BookingConfirmation,
+    canActivate: [authRequireGuard],
+  },
+  {
+    path: 'booking-confirmation/:id',
+    component: BookingCard,
     canActivate: [authRequireGuard],
   },
   {

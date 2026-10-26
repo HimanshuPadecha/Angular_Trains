@@ -1,0 +1,55 @@
+<style>
+  .glass-effect {
+    background: rgba(13, 108, 242, 0.1);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .ticket-cutout {
+    position: relative;
+  }
+  .ticket-cutout::before,
+  .ticket-cutout::after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: #101722;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .ticket-cutout::before {
+    left: -12px;
+  }
+  .ticket-cutout::after {
+    right: -12px;
+  }
+  .dashed-line {
+    border-top: 2px dashed rgba(255, 255, 255, 0.1);
+  }
+</style>
+
+<div
+  class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen"
+>
+  <main class="max-w-4xl mx-auto px-6 py-12">
+    <div>
+      <button
+        class="mb-8 flex items-center gap-2 text-slate-400 hover:text-primary transition-colors text-sm font-bold uppercase tracking-wider bg-surface-dark px-4 py-2 rounded-lg border border-white/5 shadow-md w-fit print:hidden"
+        routerLink="/booking-confirmation"
+      >
+        <span class="material-icons text-sm">arrow_back</span> Back to My Bookings
+      </button>
+      <app-booking-header [currentBooking]="currentBooking!"></app-booking-header>
+      <app-ticket-details [currentBooking]="currentBooking!"></app-ticket-details>
+      <div class="print:hidden">
+        <app-additional-services></app-additional-services>
+        <app-booking-footer></app-booking-footer>
+      </div>
+    </div>
+  </main>
+
+  <div class="print:hidden">
+    <app-footer></app-footer>
+  </div>
+</div>
