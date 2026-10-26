@@ -12,5 +12,11 @@ export const bookingGuard: CanActivateFn = (route, state) => {
     }
   }
 
+  if (state.url === 'booking/payment') {
+    if (!bookingService.containsTrainInfo() || !bookingService.contrainsFareInfo()) {
+      return false;
+    }
+  }
+
   return true;
 };

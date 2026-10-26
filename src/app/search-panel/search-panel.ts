@@ -7,6 +7,7 @@ import { baseUrl } from '../url';
 import { SearchTrainsParams, Train, Response } from '../../types';
 import { UserContextService } from '../user-context';
 import { Router } from '@angular/router';
+import { BookingService } from '../booking';
 
 @Component({
   selector: 'app-search-panel',
@@ -83,6 +84,8 @@ export class SearchPanel {
     this.toggleStation = !this.toggleStation;
   }
 
+  booking = inject(BookingService);
+
   handleTrainSearch() {
     if (!this.fromStation() || !this.toStation()) {
       this.toastr.error('Select source and destination in order to search trains');
@@ -96,6 +99,8 @@ export class SearchPanel {
       trainType: this.trainOpt,
       travelClass: this.trainOpt,
     };
+
+    this.booking.addSearchParams(requestInput);
 
     if (this.userContext.isLoggedIn()) {
       this.http

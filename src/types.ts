@@ -52,6 +52,8 @@ export interface Booking {
     trainName: string;
     source: string;
     destination: string;
+    arrivalTime : string;
+    departureTime : string
   };
   sourceStation?: string;
   destinationStation?: string;
@@ -213,3 +215,7 @@ export type PassengerFromBackend = {
   age: string;
   berthPreference?: string;
 };
+
+export type Methods = 'UPI' | 'CARD' | 'NET_BANKING' | 'WALLETS';
+
+export type UpiApps = 'GPAY' | 'PHONEPE' | 'PAYTM'

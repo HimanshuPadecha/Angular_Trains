@@ -1,0 +1,27 @@
+<style>
+  .pay-glow {
+    box-shadow: 0 0 20px rgba(13, 108, 242, 0.4);
+  }
+  .step-active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #0d6cf2;
+  }
+</style>
+
+<div
+  class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen font-display"
+>
+  <main class="max-w-7xl mx-auto px-4 py-8">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <app-payment-methods class="lg:col-span-8 space-y-6"></app-payment-methods>
+      <app-journey-summary class="lg:col-span-4"></app-journey-summary>
+    </div>
+  </main>
+
+  <app-footer-security-banner></app-footer-security-banner>
+</div>

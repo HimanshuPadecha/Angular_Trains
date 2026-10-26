@@ -20,8 +20,8 @@ export class PassengerFare {
   }
 
   passengers = signal<Passenger[]>([]);
-  phone = signal<string>('');
-  email = signal('');
+  phone = signal<string>('990988765');
+  email = signal('himanshupadecha@gmail.com');
   insureance = signal(false);
 
   setPassengers(passengers: Passenger[]) {

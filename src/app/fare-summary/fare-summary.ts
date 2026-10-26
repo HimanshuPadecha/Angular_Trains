@@ -74,9 +74,9 @@ export class FareSummary {
       (passenger) => passenger.name !== '' && passenger.age > 0,
     );
 
-    if(finalPassengers.length === 0){
-      this.toaster.error("Cannot proceed with no clients !!!")
-      return
+    if (finalPassengers.length === 0) {
+      this.toaster.error('Cannot proceed with no clients !!!');
+      return;
     }
 
     if (!this.email() || !this.phone()) {
@@ -87,11 +87,12 @@ export class FareSummary {
     this.booking.addEmail(this.email());
     this.booking.addPhone(this.phone());
     this.booking.addPassengers(finalPassengers);
-    this.booking.addTotal(this.grandTotal());
+    this.booking.addBase(this.baseFare());
+    this.booking.addAdditional(
+      this.gstAmount() + this.reservationCharge() + this.superfastCharge(),
+    );
+    this.booking.addInsureance(this.insurenceAmount());
 
-    console.log(this.booking.getFareRouteInfo());
-
-    // redirect to the /payment route 
-    // this.router.navigate(['/payment'])
+    this.router.navigate(['/booking/payment']);
   }
 }

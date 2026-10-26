@@ -10,6 +10,8 @@ import { PassengerFare } from './passenger-fare/passenger-fare';
 import { authRequireGuard } from './guards/auth-require-guard';
 import { bookingGuard } from './guard/booking-guard';
 import { Signup } from './signup/signup';
+import { Payment } from './payment/payment';
+import { BookingConfirmation } from './booking-confirmation/booking-confirmation';
 
 export const routes: Routes = [
   {
@@ -48,12 +50,21 @@ export const routes: Routes = [
     component: Contact,
   },
   {
+    path: 'booking-confirmation',
+    component: BookingConfirmation,
+    canActivate: [authRequireGuard],
+  },
+  {
     path: 'booking',
     canActivate: [authRequireGuard, bookingGuard],
     children: [
       {
         path: 'passenger-fare',
         component: PassengerFare,
+      },
+      {
+        path: 'payment',
+        component: Payment,
       },
     ],
   },
